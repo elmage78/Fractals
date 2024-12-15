@@ -58,7 +58,7 @@ class NewtonFractal(ShaderMobject):
         self.offset=plane.n2p(0)
         self.scale_factor=((abs(plane.get_all_ranges()[0][0])+abs(plane.get_all_ranges()[0][0])))
         super().__init__(
-            "Newton_fractal",
+            self.CONFIG["shader_folder"],
             **kwargs
         )
         self.replace(plane, stretch=True)
@@ -151,7 +151,7 @@ class HalleyFractal(ShaderMobject):
         "offset": ORIGIN,
         "n_steps": 30,
         "julia_highlight": 0.0,
-        "max_degree": 3,
+        "max_degree": 5,
         "saturation_factor": 1.0,
         "opacity": 1.0,
         "black_for_cycles": False,
@@ -257,7 +257,7 @@ class ChebysevFractal(ShaderMobject):
         "coefs": [1.0, -1.0, 1.0, 0.0, 0.0, 1.0],
         "scale_factor": 1.0,
         "offset": ORIGIN,
-        "n_steps": 50,
+        "n_steps": 30,
         "julia_highlight": 0.0,
         "max_degree": 5,
         "saturation_factor": 1.0,
@@ -272,7 +272,6 @@ class ChebysevFractal(ShaderMobject):
         self.coefs=coefs
         self.n_steps=n_steps
         self.offset=plane.n2p(0)
-        print(plane.get_all_ranges())
         self.scale_factor=((abs(plane.get_all_ranges()[0][0])+abs(plane.get_all_ranges()[0][0])))
         super().__init__(
             self.CONFIG["shader_folder"],
@@ -463,10 +462,10 @@ class NewtonFract(InteractiveScene):
 class HalleyFract(InteractiveScene):
     coefs = [1.0, 0.0, 0.0, -1.0]
     plane_config = {
-        "x_range": (-4, 4),
-        "y_range": (-4, 4),
-        "height": 16,
-        "width": 16,
+        "x_range": (-10, 10),
+        "y_range": (-10, 10),
+        "height": 24,
+        "width": 24,
         "background_line_style": {
             "stroke_color": GREY_A,
             "stroke_width": 1.0,

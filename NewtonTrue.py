@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 #Definimos a función cuxas raíces queremos aproximar (cada grupo usará unha función distinta):
 
 z=Symbol('z')
-f=z**3+5*z**2+12*z-18
+f=z**3-1
 
 
 #Definimos a derivada da función anterior. Se fose necesario para algún método
@@ -21,7 +21,7 @@ dderf=Derivative(f,z,2).doit()
 # a fórmula correspondente:
 
 #Metodo de ***
-g=simplify(z-(f/derf)-pow(f/derf,2)*(dderf/(2*derf)))
+g=simplify(z-f/(derf-(f/derf)*(dderf/2)))
 
 # Os seguintes parámetros poden ser modificados co obxetivo de 
 #conseguir os mellores gráficos posibles: 

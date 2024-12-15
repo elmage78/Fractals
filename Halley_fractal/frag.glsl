@@ -69,8 +69,14 @@ vec2 seek_root(vec2 z, vec2[MAX_DEGREE + 1] coefs, int max_steps, out float n_it
         last_len = curr_len;
         n_iters = float(i);
 
-        vec2 step = complex_div(    2*poly(z, coefs)*dpoly(z,coefs),
-                                (2*complex_pow(dpoly(z, coefs),2))+(-1*(poly(z,coefs)*ddpoly(z,coefs))));
+        vec2 step = complex_div(poly(z,coefs),(
+            dpoly(z,coefs)-(
+                complex_mult(
+                    complex_div(poly(z,coefs),dpoly(z,coefs)),
+                    ddpoly(z,coefs)/2
+                )
+            )
+        ));
 
         curr_len = length(step);
         if(curr_len < threshold){
@@ -158,4 +164,4 @@ void main() {
         xyz_coords,
         vec3(0.0, 0.0, 1.0)
     );
- }
+}
