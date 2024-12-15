@@ -396,29 +396,7 @@ class NewtonFract(InteractiveScene):
             )
         )
         self.wait()
-
-        # Zoom in
-        fractal.set_n_steps(40)
-        # zoom_points = [
-        #     [-3.12334879, 1.61196545, 0.],
-        #     [1.21514006, 0.01415811, 0.],
-        # ]
-        # for point in zoom_points:
-        #     self.play(
-        #         frame.animate.set_height(2e-3).move_to(point),
-        #         run_time=10,
-        #         rate_func=bezier(2 * [0] + 6 * [1])
-        #     )
-        #     self.wait()
-        #     self.play(
-        #         frame.animate.center().set_height(8),
-        #         run_time=10,
-        #         rate_func=bezier(6 * [0] + 2 * [1])
-        #     )
-
-        # Allow for play
         self.tie_fractal_to_root_dots(fractal)
-        fractal.set_n_steps(100)
 
     def init_fractal(self, root_colors=ROOT_COLORS_DEEP):
         plane = self.get_plane()
@@ -497,7 +475,7 @@ class HalleyFract(InteractiveScene):
             "stroke_width": 1.0,
         }
     }
-    n_steps = 30
+    n_steps = 100
 
     def construct(self):
         self.drag_to_pan = False
@@ -522,28 +500,7 @@ class HalleyFract(InteractiveScene):
         )
         self.wait()
 
-        # Zoom in
-        fractal.set_n_steps(40)
-        zoom_points = [
-            [-3.12334879, 1.61196545, 0.],
-            [1.21514006, 0.01415811, 0.],
-        ]
-        for point in zoom_points:
-            self.play(
-                frame.animate.set_height(2e-3).move_to(point),
-                run_time=10,
-                rate_func=bezier(2 * [0] + 6 * [1])
-            )
-            self.wait()
-            self.play(
-                frame.animate.center().set_height(8),
-                run_time=10,
-                rate_func=bezier(6 * [0] + 2 * [1])
-            )
-
-        # Allow for play
         self.tie_fractal_to_root_dots(fractal)
-        fractal.set_n_steps(12)
 
     def init_fractal(self, root_colors=ROOT_COLORS_DEEP):
         plane = self.get_plane()
@@ -646,23 +603,6 @@ class ChebysevFract(InteractiveScene):
             )
         )
         self.wait()
-
-        # Zoom in
-        zoom_points = [
-            [0.0,0.0, 0.]
-        ]
-        for point in zoom_points:
-            self.play(
-                frame.animate.set_height(2e-3).move_to(point),
-                run_time=10,
-                rate_func=bezier(2 * [0] + 6 * [1])
-            )
-            self.wait()
-            self.play(
-                frame.animate.center().set_height(8),
-                run_time=10,
-                rate_func=bezier(6 * [0] + 2 * [1])
-            )
 
         # Allow for play
         self.tie_fractal_to_root_dots(fractal)

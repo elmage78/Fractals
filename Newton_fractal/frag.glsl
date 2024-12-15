@@ -34,7 +34,7 @@ out vec4 frag_color;
 #INSERT complex_functions.glsl
 
 const int MAX_DEGREE = 5;
-const float CLOSE_ENOUGH = 1e-3;
+const float CLOSE_ENOUGH = 1e-6;
 
 
 vec2 poly(vec2 z, vec2[MAX_DEGREE + 1] coefs){
@@ -73,9 +73,12 @@ vec2 seek_root(vec2 z, vec2[MAX_DEGREE + 1] coefs, int max_steps, out float n_it
         if(curr_len < threshold){
             break;
         }
+        if (curr_len > 1/threshold || step.x > 1/threshold ||step.y > 1/threshold){
+            break;
+        }
         z = z - step;
     }
-    n_iters -= log(curr_len) / log(threshold);
+    //n_iters -= log(curr_len) / log(threshold);
 
     return z;
 }
@@ -108,17 +111,18 @@ void main() {
     float n_iters;
     vec2 found_root = seek_root(z, coefs, int(n_steps), n_iters);
 
-    vec4 color = vec4(0.0);
-    float min_dist = 1e10;
+    vec4 color = vec4(0.0,0.0,0.0,1.0);
+    float min_dist = 1e8;
     float dist;
     for(int i = 0; i < int(n_roots); i++){
         dist = distance(roots[i], found_root);
         if(dist < min_dist){
             min_dist = dist;
-            color = colors[i];
+            color.xyz = colors[i].xyz;
         }
     }
-    color *= 1.0 + (0.01 * saturation_factor) * (n_iters - 2 * saturation_factor);
+    
+    color.xyz *= saturation_factor * pow((n_steps-n_iters) / n_steps,2);
 
     if(black_for_cycles > 0 && min_dist > CLOSE_ENOUGH){
         color = vec4(0.0, 0.0, 0.0, 1.0);
@@ -145,7 +149,7 @@ void main() {
         }
         color *= 1.0 * smoothstep(0, 0.1, max_dist);
     }
-    
+
     frag_color = finalize_color(
         color,
         xyz_coords,

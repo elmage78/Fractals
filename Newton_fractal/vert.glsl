@@ -9,6 +9,6 @@ uniform vec3 offset;
 #INSERT emit_gl_Position.glsl
 
 void main(){
-    xyz_coords = (point - offset) / scale_factor;
+    xyz_coords = (point - offset) / 2;
     emit_gl_Position(point);
 }
