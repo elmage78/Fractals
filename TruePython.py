@@ -357,7 +357,7 @@ class ChebysevFractal(ShaderMobject):
 # Scenes
 
 class NewtonFract(InteractiveScene):
-    coefs = [1.0,0.0,0.0, -1.0]
+    coefs = [1.0,-10.0,0.0,12.0,3.0, -1.0]
     plane_config = {
         "x_range": (-10, 10),
         "y_range": (-10, 10),
