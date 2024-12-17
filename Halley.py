@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 #Definimos a función cuxas raíces queremos aproximar (cada grupo usará unha función distinta):
 
 z=Symbol('z')
-f=z**3-1
+f=z**(np.e*sp.log(np.power(2,z)))/sp.tan(z)
 
 
 #Definimos a derivada da función anterior. Se fose necesario para algún método
@@ -21,7 +21,7 @@ dderf=Derivative(f,z,2).doit()
 # a fórmula correspondente:
 
 #Metodo de ***
-g=simplify(z-f/derf)
+g=simplify(z-(2*derf*f)/(2*derf**2)-(f*dderf))
 
 # Os seguintes parámetros poden ser modificados co obxetivo de 
 #conseguir os mellores gráficos posibles: 
@@ -91,5 +91,5 @@ plt.ylabel("y")
 #A continuación gárdase a imaxen do fractal nun ficheiro: cambiar o nome do 
 #ficheiro según o método usado 
 
-plt.savefig('fractal_Newton.png', dpi=2000)
+plt.savefig('fractal_Halley.png', dpi=4000)
 plt.show()
