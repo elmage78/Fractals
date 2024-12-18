@@ -20,6 +20,7 @@ def dpoly(x, coefs):
 manim_config.key_bindings.select = 's'
 ROOT_COLORS_BRIGHT = [RED, GREEN, BLUE, YELLOW, MAROON_B]
 ROOT_COLORS_DEEP = ["#440154", "#3b528b", "#21908c", "#5dc963", "#29abca"]
+ROOT_COLORS_HALLEY = ["#D94E7F","#540D6E","#E67F0D","#413620","#F2F261","#75BBA7","#8980F5","#EF767A","#F5B0CB","#745C97"]
 CUBIC_COLORS = [RED_E, TEAL_E, BLUE_E]
 
 
@@ -357,7 +358,7 @@ class ChebysevFractal(ShaderMobject):
 # Scenes
 
 class NewtonFract(InteractiveScene):
-    coefs = [1.0,-10.0,0.0,12.0,3.0, -1.0]
+    coefs = [3.1415,3.3,-1.0,2.0,-8.0, 12.0]
     plane_config = {
         "x_range": (-10, 10),
         "y_range": (-10, 10),
@@ -460,7 +461,7 @@ class NewtonFract(InteractiveScene):
 
 
 class HalleyFract(InteractiveScene):
-    coefs = [1.0, 0.0, 0.0, -1.0]
+    coefs = [14.0,-8.0,-19.0,14.0,6.0,8.0,-12.0,20.0,-12.0,9.0,-8.0]
     plane_config = {
         "x_range": (-10, 10),
         "y_range": (-10, 10),
@@ -478,7 +479,7 @@ class HalleyFract(InteractiveScene):
 
     def construct(self):
         self.drag_to_pan = False
-        self.init_fractal(root_colors=ROOT_COLORS_BRIGHT)
+        self.init_fractal(root_colors=ROOT_COLORS_HALLEY)
         fractal, plane, root_dots = self.group
 
         # Transition from last scene
@@ -491,10 +492,9 @@ class HalleyFract(InteractiveScene):
         )
         self.wait()
         self.play(
-            fractal.animate.set_colors(ROOT_COLORS_DEEP),
             *(
                 dot.animate.set_fill(interpolate_color(color, WHITE, 0.2))
-                for dot, color in zip(root_dots, ROOT_COLORS_DEEP)
+                for dot, color in zip(root_dots, ROOT_COLORS_HALLEY)
             )
         )
         self.wait()
@@ -535,7 +535,7 @@ class HalleyFract(InteractiveScene):
 
     def get_root_dots(self, plane, fractal):
         self.root_dots = VGroup(*(
-            Dot(plane.n2p(root), color=color,fill_color=color)
+            Dot(plane.n2p(root), color=color,fill_color=color,radius=0.025)
             for root, color in zip(
                 coefficients_to_roots(fractal.coefs),
                 fractal.colors

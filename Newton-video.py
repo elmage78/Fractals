@@ -211,85 +211,6 @@ class NewtonRhapsonFractal(Scene):
         plane = ComplexPlane(
         ).add_coordinates().set_z_index(0).scale_to_fit_width(config.frame_width)
 
-
-#         z=Symbol('z')
-#         f=z/(z**2+z)**(1/2)
-#         derf=Derivative(f,z,1).doit()
-#         g=simplify(z-f/derf)
-
-#         Val = ValueTracker(0)
-        
-#         ff=lambdify('z',f,"numpy")
-#         gg=lambdify('z',g,"numpy")
-
-#         xspace=np.linspace(a,b,npuntos+1)
-#         yspace=np.linspace(c,d,npuntos+1)
-
-#         def LabelPoint(Point, Value):
-#             return always_redraw(lambda: Text("("+str(Value.get_value().real)[:6]+" + "+str(Value.get_value().imag)[:6]+"j)",font_size=20).next_to(Point, UR, 0.1))
-#         def MovePointAnimate(Pt,plane,z):
-#             return Pt.animate.move_to(plane.n2p(complex(gg(z.get_value()))))
-        
-                    
-#         # This section is for the box top left
-#         def FuncByParts(val):
-#             if (val>0.05 or val<-1.05):
-#                 return val/(val**2+val)**(1/2)
-#             elif val <-0.5:
-#                 return -3.5
-#             else:
-#                 return 3.5
-            
-#         BoxStart = Rectangle(height=config.frame_height,width=config.frame_width,fill_opacity=1, fill_color = BLACK).set_z_index(1)
-#         BoxEnd = Rectangle(height=2,width=2*1.833,fill_opacity=1, fill_color=BLACK).to_corner(UL).set_z_index(1)
-
-#         axes = [ Axes(
-#             x_range=[-8, 8, 1],
-#             y_range=[-3.5, 3.5, 1],
-#             axis_config={"color": WHITE},
-#             x_axis_config={
-#                 "numbers_to_include": [-1,0],
-#                 "numbers_with_elongated_ticks": np.concatenate((np.arange(-8, 8, 2),[-1])),
-#             },
-#             tips=False,
-#         ).set_z_index(2) for _ in range(2)]
-#         axes[0].move_to(BoxEnd.get_center())
-#         axes[0].scale_to_fit_width(BoxEnd.get_width())
-        
-#         FuncParts = [axes[_].plot(lambda x: FuncByParts(x),discontinuities=[-0.5],dt=0.55,color=GREEN).set_z_index(2) for _ in range(2)]
-#         BoxEnd.add(axes[0], FuncParts[0])
-#         BoxStart.add(axes[1], FuncParts[1])
-#         # In here imma do the tangent for display
-#         Valx = ValueTracker(1)
-#         Pt_tangentx =  always_redraw(lambda: Dot(point=axes[1].c2p(Valx.get_value(),func(Valx.get_value())),color=GOLD))
-#         def WhatTheFuck(x):
-#             if (Valx.get_value() >= -1.1 and Valx.get_value() <= 0.02):
-#                 return 0
-#             return Difffunc(Valx.get_value())*(x-Valx.get_value())+func(Valx.get_value())
-#         def TgFuncToDraw(Me):
-#             if (Valx.get_value() >= -1.1 and Valx.get_value() <= 0.02):
-#                 return always_redraw(lambda: axes[1].plot(lambda x: func(x), color=YELLOW)).add_updater(TgFuncToDraw)
-#             return always_redraw(lambda: axes[1].plot(lambda x: WhatTheFuck(x), color=YELLOW)).add_updater(TgFuncToDraw)
-#         TangX = always_redraw(lambda: axes[1].plot(lambda x: WhatTheFuck(x), color=YELLOW)).add_updater(TgFuncToDraw)
-#         Tangent = VGroup(Pt_tangentx,TangX).set_z_index(3)
-#         # now this area will be for the dot that moves around to show 
-#         RealVal = ValueTracker(0)
-#         ImaginaryVal = ValueTracker(0)
-#         colorfunc = lambda: ManimColor((CalcPointN(RealVal.get_value(),ImaginaryVal.get_value())/30,(30-CalcPointN(RealVal.get_value(),ImaginaryVal.get_value()))/30,0,1))
-#         puntoForShow = always_redraw(lambda: Dot(point=axes[1].c2p(RealVal,func(RealVal.get_value()),color=colorfunc)))
-
-#         #self.play(Create(BoxStart),run_time = 4,lag_ratio = 0.1)
-#         #self.wait(1.5)
-#         #self.play(Create(Tangent))
-#         #self.play(Valx.animate.set_value(-3),run_time=2)
-#         #self.play(Valx.animate.set_value(1),run_time=1)
-#         #self.play(Valx.animate.set_value(0.021),run_time=5)
-#         #self.play(Uncreate(Tangent))
-#         #self.wait()
-#         #
-# #
-#         #self.wait()
-
 class ComplexNewtonsMethod(NewtonRhapsonFractal):
     RootPtsAprox = [complex(0.12320000000000003,3.984723764762459e-33)] # other root is inf
     poly_tex = "\\frac{z}{\sqrt{z^2+z}}"
@@ -494,7 +415,7 @@ class ComplexNewtonsMethod(NewtonRhapsonFractal):
                     else:
                         if dpz == 0:
                             dpz = 0.1  # ???
-                        z1 = z0 - pz / dpz
+                        z1 = z0 - pz / dpz #Substitute by Newton, Halley OR chebysev method accordingly
 
                     if np.isnan(z1):
                         z1 = z0
